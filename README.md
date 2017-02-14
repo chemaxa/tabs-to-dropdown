@@ -17,4 +17,4 @@ Where parms is a object with fields:
 jQuery and HTML5 Tabbar to Dropdown list - Fully responsive!
 
 ### DEMO
-https://rawgit.com/ChrisTheButcher/tabs-to-dropdown/master/index.html
+See my demo here https://cdn.rawgit.com/chemaxa/tabs-to-dropdown/0b706118/index.html
