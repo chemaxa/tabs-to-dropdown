@@ -3,6 +3,7 @@
     $.fn.ttd = function (options) {
         var settings = {
             resizeTimeout: 100,
+            containerSelector : '.ttd-tabs__container',
             listSelector : '.ttd-tabs__list',
             itemSelector : '.ttd-tabs__item',
             iconClass: 'fa fa-angle-down',
@@ -11,11 +12,11 @@
         $.extend(settings, options);
         
         this.each(function () {
-            var tabBar = $(this);
-            console.log(tabBar);
+            $(this).children(settings.listSelector).wrap("<div class='"+settings.containerSelector.slice(1)+"'></div>");
+            var tabBar = $(this).children(settings.containerSelector);
             var tabList = tabBar.children(settings.listSelector);
             var tabListItem = tabList.children(settings.itemSelector);
-            console.log(settings.iconClass)
+
             var dropdown = $("<div class='ttd-tabs__dropdown'><button class='ttd-tabs__dropdown-toggle'><i class='" + settings.iconClass + "'></i>&nbsp;"+settings.moreText+"</button><ul class='ttd-tabs__dropdown-list'></ul></div>");
             var dropdownToggle = dropdown.children(".ttd-tabs__dropdown-toggle");
             var dropdownList = dropdown.children(".ttd-tabs__dropdown-list");
