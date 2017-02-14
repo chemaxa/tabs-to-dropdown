@@ -1,45 +1,74 @@
-$(function() {
-    $(".tabs-to-dropdown").each(function() {
-        var resizeTimeout   = 20;
+!(function ($) {
+    'use strict';
+    $.fn.ttd = function (options) {
+        var settings = {
+            resizeTimeout: 100,
+            barSelector: '.ttd-tabs__bar',
+            listSelector : '.ttd-tabs__list',
+            itemSelector : '.ttd-tabs__item',
+            iconClass: 'fa fa-angle-down'
+        };
+        $.extend(settings, options);
+        console.log(settings);
+        this.each(function () {
+            var tabBar = $(this).children(settings.barSelector);
+            var tabList = tabBar.children(settings.listSelector);
+            var tabListItem = tabList.children(settings.itemSelector);
+            console.log(settings.iconClass)
+            var dropdown = $("<div class='ttd-tabs__dropdown'><button class='ttd-tabs__dropdown-toggle'><i class='" + settings.iconClass + "'></i></button><ul class='ttd-tabs__dropdown-list'></ul></div>");
+            var dropdownToggle = dropdown.children(".ttd-tabs__dropdown-toggle");
+            var dropdownList = dropdown.children(".ttd-tabs__dropdown-list");
 
-        var tabBar          = $(this).children(".tab-bar");
-        var tabList         = tabBar.children("ul");
-        var tabListItem     = tabList.children("li");
+            var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart" : "click");
 
-        var dropdown        = $(this).children(".dropdown");
-        var dropdownToggle  = dropdown.children(".dropdown-toggle");
-        var dropdownList    = dropdown.children("ul");
+            var tabsToDropdown = function () {
+                var tabBarWidth = tabBar.width();
+                tabListItem.each(function (index) {
+                    var dropdownListItem = dropdownList.children("li").eq(index);
+                    var tabListItemOffset = $(this).position().left + $(this).outerWidth();
 
-        var clickHandler = ("ontouchstart" in document.documentElement ? "touchstart": "click");
+                    if (tabListItemOffset >= tabBarWidth) {
+                        $(this).addClass("ttd-hide"); dropdownListItem.addClass("ttd-show");
+                    } else {
+                        $(this).removeClass("ttd-hide"); dropdownListItem.removeClass("ttd-show");
+                    }
+                });
 
-        var tabsToDropdown  = function() {
-            var tabBarWidth = tabBar.width();
-            tabListItem.each(function(index) {
-                var dropdownListItem  = dropdownList.children("li").eq(index);
-                var tabListItemOffset = $(this).position().left + $(this).outerWidth();
+                tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show") : dropdown.removeClass("ttd-show");
+            };
 
-                if (tabListItemOffset >= tabBarWidth) {
-                    $(this).addClass("ttd-hide"); dropdownListItem.addClass("ttd-show");
-                } else {
-                    $(this).removeClass("ttd-hide"); dropdownListItem.removeClass("ttd-show");
-                }
+            tabListItem.clone().appendTo(dropdownList);
+
+            tabsToDropdown();
+            
+            var sizeWait;
+            $(window).bind("resize", function () {
+                if (typeof sizeWait != "undefined") { clearTimeout(sizeWait); }
+                sizeWait = setTimeout(tabsToDropdown, settings.resizeTimeout);
             });
 
-            tabList.children(".ttd-hide").length > 0 ? dropdown.addClass("ttd-show"): dropdown.removeClass("ttd-show");
-        };
+            $(this).append(dropdown);
+            dropdown.bind(clickHandler, function (e) { e.stopPropagation(); });
+            $(document).bind(clickHandler, function () { dropdown.removeClass("ttd-open"); });
+            dropdownToggle.bind(clickHandler, function (e) { dropdown.toggleClass("ttd-open"); e.stopPropagation(); });
 
-        tabListItem.clone().appendTo(dropdownList);
-
-        tabsToDropdown();
-        $(window).bind("resize", function(){
-            if(typeof sizeWait != "undefined") { clearTimeout(sizeWait); }
-            sizeWait = setTimeout(function(){
-                tabsToDropdown();
-            },resizeTimeout);
+            function debounce(func,delay) {
+                var timer;
+                if (delay === undefined) {
+                    delay = 100;
+                }
+                return function () {
+                    var self = this, args = arguments;
+                    if (timer) {
+                        clearTimeout(timer);
+                        timer = null;
+                    }
+                    timer = setTimeout(function () {
+                        func.apply(self, args);
+                    }, delay);
+                };
+            };
         });
-
-        dropdown.bind(clickHandler, function(e) { e.stopPropagation(); });
-        $(document).bind(clickHandler, function() { dropdown.removeClass("ttd-open"); });
-        dropdownToggle.bind(clickHandler, function(e) { dropdown.toggleClass("ttd-open"); e.stopPropagation(); });
-    });
-});
+        return this;
+    };
+})(jQuery);
