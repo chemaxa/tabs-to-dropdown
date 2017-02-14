@@ -13,6 +13,7 @@ Where parms is a object with fields:
 `itemSelector : '.ttd-tabs__item'` - default selector for list item, 
 `iconClass: 'fa fa-angle-down'` - default class for dropdown icon,
 `moreText: ''` -  default text for more button, 
+`containerSelector : '.ttd-tabs__container'` - default container for list items
 
 jQuery and HTML5 Tabbar to Dropdown list - Fully responsive!
 
