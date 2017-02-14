@@ -3,15 +3,15 @@
     $.fn.ttd = function (options) {
         var settings = {
             resizeTimeout: 100,
-            barSelector: '.ttd-tabs__bar',
             listSelector : '.ttd-tabs__list',
             itemSelector : '.ttd-tabs__item',
             iconClass: 'fa fa-angle-down'
         };
         $.extend(settings, options);
-        console.log(settings);
+        
         this.each(function () {
-            var tabBar = $(this).children(settings.barSelector);
+            var tabBar = $(this);
+            console.log(tabBar);
             var tabList = tabBar.children(settings.listSelector);
             var tabListItem = tabList.children(settings.itemSelector);
             console.log(settings.iconClass)
@@ -51,23 +51,6 @@
             dropdown.bind(clickHandler, function (e) { e.stopPropagation(); });
             $(document).bind(clickHandler, function () { dropdown.removeClass("ttd-open"); });
             dropdownToggle.bind(clickHandler, function (e) { dropdown.toggleClass("ttd-open"); e.stopPropagation(); });
-
-            function debounce(func,delay) {
-                var timer;
-                if (delay === undefined) {
-                    delay = 100;
-                }
-                return function () {
-                    var self = this, args = arguments;
-                    if (timer) {
-                        clearTimeout(timer);
-                        timer = null;
-                    }
-                    timer = setTimeout(function () {
-                        func.apply(self, args);
-                    }, delay);
-                };
-            };
         });
         return this;
     };

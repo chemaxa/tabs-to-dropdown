@@ -33,9 +33,7 @@
     background: linear-gradient(to right, rgba(45, 62, 80, 0) 0%, rgba(45, 62, 80, 1) 28%, rgba(45, 62, 80, 1) 100%);
 }
 
-.ttd-tabs__bar {
-    overflow: hidden;
-    margin-right: 46px;
+.ttd-tabs {
     position: relative;
 }
 
@@ -52,7 +50,7 @@
     clear: both;
 }
 
-.ttd-tabs>.ttd-tabs__bar>ul>li {
+.ttd-tabs>ul>li {
     display: inline-block;
     float: left;
     opacity: 1;
@@ -77,14 +75,14 @@
     color: rgb(25, 189, 155);
 }
 
-.ttd-tabs__item>aa:active {
+.ttd-tabs__item>a:active {
     color: rgba(25, 189, 155, .65);
 }
 
 
 /* Home button */
 
-.ttd-tabs>.ttd-tabs__bar>ul>li>a>.fa {
+.ttd-tabs>ul>li>a>.fa {
     font-size: 34px;
     padding: 0 9px;
 }
@@ -204,10 +202,6 @@
 /* Media Queries */
 
 @media all and (max-width:699px) {
-    /* ttd-tabs bar */
-    .ttd-tabs>.ttd-tabs__bar {
-        margin-right: 37px;
-    }
     .ttd-tabs::after {
         width: 55px;
     }
