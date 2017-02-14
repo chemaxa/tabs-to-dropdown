@@ -5,7 +5,8 @@
             resizeTimeout: 100,
             listSelector : '.ttd-tabs__list',
             itemSelector : '.ttd-tabs__item',
-            iconClass: 'fa fa-angle-down'
+            iconClass: 'fa fa-angle-down',
+            moreText: ''
         };
         $.extend(settings, options);
         
@@ -15,7 +16,7 @@
             var tabList = tabBar.children(settings.listSelector);
             var tabListItem = tabList.children(settings.itemSelector);
             console.log(settings.iconClass)
-            var dropdown = $("<div class='ttd-tabs__dropdown'><button class='ttd-tabs__dropdown-toggle'><i class='" + settings.iconClass + "'></i></button><ul class='ttd-tabs__dropdown-list'></ul></div>");
+            var dropdown = $("<div class='ttd-tabs__dropdown'><button class='ttd-tabs__dropdown-toggle'><i class='" + settings.iconClass + "'></i>&nbsp;"+settings.moreText+"</button><ul class='ttd-tabs__dropdown-list'></ul></div>");
             var dropdownToggle = dropdown.children(".ttd-tabs__dropdown-toggle");
             var dropdownList = dropdown.children(".ttd-tabs__dropdown-list");
 
